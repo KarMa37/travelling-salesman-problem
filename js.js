@@ -1,6 +1,7 @@
 let cities = [];
 let totalCities = 5;
 let recordDistance;
+let bestRoute;
 
 function swap(a, i, j) {
     let temp = a[i];
@@ -22,6 +23,7 @@ function setup() {
         cities[i] = createVector(random(width), random(height));
     }
     recordDistance = calcDistance(cities);
+    bestRoute = cities.slice();
 }
 
 function draw() {
@@ -40,6 +42,15 @@ function draw() {
     }
     endShape();
 
+    stroke(255, 0, 0);
+    strokeWeight(3);
+    noFill();
+    beginShape();
+    for (let i = 0; i < cities.length; i++) {
+        vertex(bestRoute[i].x, bestRoute[i].y)
+    }
+    endShape();
+
     let i = floor(random(cities.length));
     let j = floor(random(cities.length));
     swap(cities, i, j);
@@ -47,6 +58,7 @@ function draw() {
     let dist = calcDistance(cities);
     if (dist < recordDistance) {
         recordDistance = dist;
+        bestRoute = cities.slice();
         console.log(recordDistance);
     }
 }
