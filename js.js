@@ -1,8 +1,10 @@
 let cities = [];
 let orders = [];
-let totalCities = 5;
+let totalCities = 6;
 let recordDistance;
 let bestRoute;
+let totalConvertions = factorial(totalCities);
+let count = 0;
 
 function swap(a, i, j) {
     let temp = a[i];
@@ -23,6 +25,7 @@ function calcDistance(points, orders) {
 }
 
 function nextOrder() {
+    count++;
     let largestI = -1;
     for (let i = 0; i < orders.length - 1; i++) {
         if (orders[i] < orders[i + 1]) {
@@ -31,7 +34,6 @@ function nextOrder() {
     }
     if (largestI === -1) {
         noLoop();
-        console.log('done');
     }
 
     let largestJ = -1;
@@ -48,6 +50,14 @@ function nextOrder() {
     let endArray = orders.splice(largestI + 1);
     endArray.reverse();
     orders = orders.concat(endArray);
+}
+
+function factorial(n) {
+    if ((n === 0) || (n === 1))
+        return 1;
+    else {
+        return (n * factorial(n - 1));
+    }
 }
 
 function setup() {
@@ -91,16 +101,16 @@ function draw() {
     if (dist < recordDistance) {
         recordDistance = dist;
         bestRoute = orders.slice();
-        console.log(recordDistance);
     }
 
-    textSize(50);
-    let s = '';
-    for (let i = 0; i < orders.length; i++) {
-        s += orders[i];
-    }
+    textSize(45);
     fill(255, 0, 0);
-    text(s, 30, height - 30);
+    text(`min L = ${Math.round(recordDistance)}px`, 30, height - 15);
+
+    let percentage = 100 * (count / totalConvertions);
+    textSize(45);
+    fill(255, 0, 0);
+    text(`${Math.ceil(percentage)}% done`, 550, height - 15);
 
     nextOrder();
 }
