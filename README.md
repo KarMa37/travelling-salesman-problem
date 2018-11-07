@@ -1,4 +1,4 @@
-## It's a repository with a simple algorithm* made by p5.js.
+## It's a repository with a simple algorithm* created with p5.js.
 
 I used here:
 * HTML
